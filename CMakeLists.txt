@@ -6,15 +6,18 @@ enable_language(CXX)
 # --- Add-on Dependencies ------------------------------------------------------
 
 find_package(Kodi REQUIRED)
-#find_package(kodiplatform REQUIRED)
 
 include_directories(${INCLUDES}
                     ${PROJECT_SOURCE_DIR}/src
                     ${KODI_INCLUDE_DIR}
-#                    ${kodiplatform_INCLUDE_DIRS}
 )
 
-set(XARCADE_SOURCES src/addon.cpp)
+set(XARCADE_SOURCES
+  src/xarcade/XArcadeDevice.cpp
+  src/xarcade/XArcadeScanner.cpp
+  src/addon.cpp
+  src
+)
 
 # ------------------------------------------------------------------------------
 

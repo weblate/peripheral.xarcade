@@ -20,14 +20,45 @@
 
 #define PERIPHERAL_ADDON_JOYSTICKS
 
+#include "utils/CommonMacros.h"
+#include "xarcade/XArcadeDefines.h"
+#include "xarcade/XArcadeDevice.h"
+#include "xarcade/XArcadeScanner.h"
+#include "xarcade/XArcadeTypes.h"
+
 #include "xbmc_addon_dll.h"
 #include "kodi_peripheral_dll.h"
+#include "kodi_peripheral_utils.hpp"
+#include "libXBMC_addon.h"
+
+#include <algorithm>
+
+namespace XARCADE
+{
+  ADDON::CHelper_libXBMC_addon* FRONTEND = nullptr;
+
+  DeviceVector DEVICES;
+}
+
+using namespace XARCADE;
 
 extern "C"
 {
 
 ADDON_STATUS ADDON_Create(void* callbacks, void* props)
 {
+  if (callbacks != nullptr)
+  {
+    FRONTEND = new ADDON::CHelper_libXBMC_addon;
+    if (!FRONTEND || !FRONTEND->RegisterMe(callbacks))
+    {
+      FRONTEND = nullptr;
+      return ADDON_STATUS_PERMANENT_FAILURE;
+    }
+
+    CXArcadeScanner::Get().Initailize(FRONTEND);
+  }
+
   return ADDON_GetStatus();
 }
 
@@ -37,11 +68,19 @@ void ADDON_Stop()
 
 void ADDON_Destroy()
 {
+  CXArcadeScanner::Get().Deinitailize();
+
+  DEVICES.clear();
+
+  SAFE_DELETE(FRONTEND);
 }
 
 ADDON_STATUS ADDON_GetStatus()
 {
-  return ADDON_STATUS_UNKNOWN;
+  if (FRONTEND == nullptr)
+    return ADDON_STATUS_UNKNOWN;
+
+  return ADDON_STATUS_OK;
 }
 
 bool ADDON_HasSettings()
@@ -79,7 +118,7 @@ const char* GetMinimumPeripheralAPIVersion(void)
 
 PERIPHERAL_ERROR GetAddonCapabilities(PERIPHERAL_CAPABILITIES* pCapabilities)
 {
-  if (!pCapabilities)
+  if (pCapabilities == nullptr)
     return PERIPHERAL_ERROR_INVALID_PARAMETERS;
 
   pCapabilities->provides_joysticks = true;
@@ -89,20 +128,64 @@ PERIPHERAL_ERROR GetAddonCapabilities(PERIPHERAL_CAPABILITIES* pCapabilities)
 
 PERIPHERAL_ERROR PerformDeviceScan(unsigned int* peripheral_count, PERIPHERAL_INFO** scan_results)
 {
-  return PERIPHERAL_ERROR_FAILED;
+  if (peripheral_count == nullptr || scan_results == nullptr)
+    return PERIPHERAL_ERROR_INVALID_PARAMETERS;
+
+  // Close disconnected devices
+  DEVICES.erase(std::remove_if(DEVICES.begin(), DEVICES.end(),
+    [](const DevicePtr& device)
+    {
+      return !device->IsOpen();
+    }), DEVICES.end());
+
+  // Open new devices
+  DeviceVector newDevices = CXArcadeScanner::Get().GetNewDevices();
+  for (auto& device : newDevices)
+  {
+    if (device->Open())
+      DEVICES.emplace_back(std::move(device));
+  }
+
+  // Get peripheral info
+  JoystickVector joysticks;
+  for (auto& device : DEVICES)
+    device->GetJoystickInfo(joysticks);
+
+  // Upcast array pointers
+  std::vector<ADDON::Peripheral*> peripherals;
+  for (auto& joystick : joysticks)
+    peripherals.push_back(joystick.get());
+
+  *peripheral_count = peripherals.size();
+  ADDON::Peripherals::ToStructs(peripherals, scan_results);
+
+  return PERIPHERAL_NO_ERROR;
 }
 
 void FreeScanResults(unsigned int peripheral_count, PERIPHERAL_INFO* scan_results)
 {
+  ADDON::Peripherals::FreeStructs(peripheral_count, scan_results);
 }
 
 PERIPHERAL_ERROR GetEvents(unsigned int* event_count, PERIPHERAL_EVENT** events)
 {
-  return PERIPHERAL_ERROR_FAILED;
+  if (event_count == nullptr || events == nullptr)
+    return PERIPHERAL_ERROR_INVALID_PARAMETERS;
+
+  std::vector<ADDON::PeripheralEvent> peripheralEvents;
+
+  for (auto& device : DEVICES)
+    device->GetEvents(peripheralEvents);
+
+  *event_count = peripheralEvents.size();
+  ADDON::PeripheralEvents::ToStructs(peripheralEvents, events);
+
+  return PERIPHERAL_NO_ERROR;
 }
 
 void FreeEvents(unsigned int event_count, PERIPHERAL_EVENT* events)
 {
+  ADDON::PeripheralEvents::FreeStructs(event_count, events);
 }
 
 bool SendEvent(const PERIPHERAL_EVENT* event)
@@ -112,11 +195,36 @@ bool SendEvent(const PERIPHERAL_EVENT* event)
 
 PERIPHERAL_ERROR GetJoystickInfo(unsigned int index, JOYSTICK_INFO* info)
 {
-  return PERIPHERAL_ERROR_FAILED;
+  if (info == nullptr)
+    return PERIPHERAL_ERROR_INVALID_PARAMETERS;
+
+  JoystickPtr joystick;
+
+  for (auto& device : DEVICES)
+  {
+    if (device->GetPeripheralIndex(0) == index ||
+        device->GetPeripheralIndex(1) == index)
+    {
+      joystick = device->GetJoystick(index);
+      break;
+    }
+  }
+
+  if (joystick)
+  {
+    joystick->ADDON::Joystick::ToStruct(*info);
+    return PERIPHERAL_NO_ERROR;
+  }
+
+  return PERIPHERAL_ERROR_NOT_CONNECTED;
 }
 
 void FreeJoystickInfo(JOYSTICK_INFO* info)
 {
+  if (!info)
+    return;
+
+  ADDON::Joystick::FreeStruct(*info);
 }
 
 PERIPHERAL_ERROR GetFeatures(const JOYSTICK_INFO* joystick, const char* controller_id,

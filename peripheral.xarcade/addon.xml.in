@@ -2,7 +2,7 @@
 <addon
     id="peripheral.xarcade"
     version="1.0.0"
-    name="X-Arcade Tankstick driver"
+    name="X-Arcade Tankstick Driver"
     provider-name="Team-Kodi">
     <requires>
         <c-pluff version="0.1"/>

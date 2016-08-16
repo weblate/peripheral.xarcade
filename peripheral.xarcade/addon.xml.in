@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon
+    id="peripheral.xarcade"
+    version="1.0.0"
+    name="X-Arcade Tankstick driver"
+    provider-name="Team-Kodi">
+    <requires>
+        <c-pluff version="0.1"/>
+        <import addon="kodi.peripheral" version="1.0.19"/>
+    </requires>
+    <extension
+        point="kodi.peripheral"
+        provides_joysticks="true"
+        library_@PLATFORM@="@LIBRARY_FILENAME@"/>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">X-Arcade Tankstick driver</summary>
+        <description lang="en">This driver enables input from the X-Arcade Tankstick.</description>
+        <platform>@PLATFORM@</platform>
+        <nofanart>true</nofanart>
+    </extension>
+</addon>

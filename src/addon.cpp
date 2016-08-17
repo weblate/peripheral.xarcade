@@ -127,6 +127,11 @@ PERIPHERAL_ERROR GetAddonCapabilities(PERIPHERAL_CAPABILITIES* pCapabilities)
   return PERIPHERAL_NO_ERROR;
 }
 
+bool SupportsDevice(const char* device_name)
+{
+  return CXArcadeUtils::IsXArcadeDevice(device_name ? device_name : "");
+}
+
 PERIPHERAL_ERROR PerformDeviceScan(unsigned int* peripheral_count, PERIPHERAL_INFO** scan_results)
 {
   if (peripheral_count == nullptr || scan_results == nullptr)

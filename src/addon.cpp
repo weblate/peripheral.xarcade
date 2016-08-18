@@ -25,6 +25,7 @@
 #include "xarcade/XArcadeDevice.h"
 #include "xarcade/XArcadeScanner.h"
 #include "xarcade/XArcadeTypes.h"
+#include "xarcade/XArcadeUtils.h"
 
 #include "xbmc_addon_dll.h"
 #include "kodi_peripheral_dll.h"

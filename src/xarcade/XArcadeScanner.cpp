@@ -21,6 +21,7 @@
 #include "XArcadeScanner.h"
 #include "XArcadeDefines.h"
 #include "XArcadeDevice.h"
+#include "XArcadeUtils.h"
 #include "utils/CommonDefines.h" // for INVALID_FD
 
 #include "libXBMC_addon.h"
@@ -82,8 +83,7 @@ DeviceVector CXArcadeScanner::GetNewDevices()
     char name[256] = { };
     ioctl(fevdev, EVIOCGNAME(sizeof(name)), name);
 
-    if ((strcmp(name, "XGaming X-Arcade") == 0) ||
-        (strcmp(name, "XGaming USBAdapter") == 0))
+    if (CXArcadeUtils::IsXArcadeDevice(name))
     {
       // Found device
       DevicePtr device = std::make_shared<CXArcadeDevice>(fevdev, m_nextIndex++, m_frontend);

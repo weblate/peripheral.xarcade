@@ -15,6 +15,7 @@ include_directories(${INCLUDES}
 set(XARCADE_SOURCES
   src/xarcade/XArcadeDevice.cpp
   src/xarcade/XArcadeScanner.cpp
+  src/xarcade/XArcadeUtils.cpp
   src/addon.cpp
   src
 )

@@ -135,7 +135,7 @@ JoystickPtr CXArcadeDevice::GetJoystick(unsigned int index)
   }
   else
   {
-    JoystickPtr player2 = std::make_shared<ADDON::Joystick>(XARCADE_TANKSTICK_PROVIDER, XARCADE_TANKSTICK_NAME_PLAYER_1);
+    JoystickPtr player2 = std::make_shared<ADDON::Joystick>(XARCADE_TANKSTICK_PROVIDER, XARCADE_TANKSTICK_NAME_PLAYER_2);
     player2->SetVendorID(XARCADE_TANKSTICK_VENDOR_ID);
     player2->SetProductID(XARCADE_TANKSTICK_PRODUCT_ID);
     player2->SetIndex(GetPeripheralIndex(index));

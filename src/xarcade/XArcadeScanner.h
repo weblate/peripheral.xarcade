@@ -39,7 +39,7 @@ namespace XARCADE
     void Initailize(ADDON::CHelper_libXBMC_addon* frontend);
     void Deinitailize();
 
-    DeviceVector GetNewDevices();
+    DeviceVector GetDevices();
 
   private:
     ADDON::CHelper_libXBMC_addon* m_frontend;

@@ -57,7 +57,7 @@ void CXArcadeScanner::Deinitailize()
   m_frontend = nullptr;
 }
 
-DeviceVector CXArcadeScanner::GetNewDevices()
+DeviceVector CXArcadeScanner::GetDevices()
 {
   DeviceVector devices;
 
@@ -86,9 +86,7 @@ DeviceVector CXArcadeScanner::GetNewDevices()
     if (CXArcadeUtils::IsXArcadeDevice(name))
     {
       // Found device
-      DevicePtr device = std::make_shared<CXArcadeDevice>(fevdev, m_nextIndex++, m_frontend);
-      if (device->Open())
-        devices.emplace_back(std::move(device));
+      devices.emplace_back(std::make_shared<CXArcadeDevice>(fevdev, m_nextIndex++, m_frontend));
     }
     else
     {

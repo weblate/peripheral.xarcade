@@ -140,7 +140,7 @@ PERIPHERAL_ERROR PerformDeviceScan(unsigned int* peripheral_count, PERIPHERAL_IN
     }), DEVICES.end());
 
   // Open new devices
-  DeviceVector newDevices = CXArcadeScanner::Get().GetNewDevices();
+  DeviceVector newDevices = CXArcadeScanner::Get().GetDevices();
   for (auto& device : newDevices)
   {
     if (device->Open())

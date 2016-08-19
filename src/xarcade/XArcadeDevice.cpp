@@ -96,8 +96,6 @@ bool CXArcadeDevice::Open()
       int res = ioctl(m_fd, EVIOCGRAB, 1);
       if (res == 0)
         m_bOpen = true;
-      else
-        m_frontend->Log(ADDON::LOG_ERROR, "Failed to get exclusive access to X-Arcade: %d (%s)", errno, strerror(errno));
     }
   }
 

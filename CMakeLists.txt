@@ -17,7 +17,6 @@ set(XARCADE_SOURCES
   src/xarcade/XArcadeScanner.cpp
   src/xarcade/XArcadeUtils.cpp
   src/addon.cpp
-  src
 )
 
 # ------------------------------------------------------------------------------

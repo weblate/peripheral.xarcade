@@ -76,7 +76,7 @@ DeviceVector CXArcadeScanner::GetDevices()
   {
     const char* filename = pglob.gl_pathv[ctr];
 
-    int fevdev = open(filename, O_RDONLY);
+    int fevdev = open(filename, O_RDONLY | O_NONBLOCK);
     if (fevdev == INVALID_FD)
       continue;
 

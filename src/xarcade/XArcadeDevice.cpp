@@ -163,8 +163,7 @@ void CXArcadeDevice::GetEvents(std::vector<ADDON::PeripheralEvent>& events)
   int rd = read(m_fd, ev, sizeof(ev));
   if (rd < 0)
   {
-    m_frontend->Log(ADDON::LOG_ERROR, "Failed to read X-Arcade: %d (%s)", errno, strerror(errno));
-    Close();
+    // No events
     return;
   }
 

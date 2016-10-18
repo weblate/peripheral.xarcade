@@ -1,7 +1,5 @@
+cmake_minimum_required(VERSION 3.1)
 project(peripheral.xarcade)
-
-cmake_minimum_required(VERSION 2.6)
-enable_language(CXX)
 
 # --- Add-on Dependencies ------------------------------------------------------
 
@@ -23,4 +21,3 @@ set(XARCADE_SOURCES
 
 build_addon(${PROJECT_NAME} XARCADE DEPLIBS)
 
-include(CPack)

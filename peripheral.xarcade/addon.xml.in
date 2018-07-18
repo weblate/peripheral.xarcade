@@ -12,7 +12,9 @@
         library_@PLATFORM@="@LIBRARY_FILENAME@"/>
     <extension point="xbmc.addon.metadata">
         <summary lang="en_GB">X-Arcade Tankstick driver</summary>
-        <description lang="en_GB">This driver enables input from the X-Arcade Tankstick.</description>
+        <description lang="en_GB">This driver enables input from the X-Arcade Tankstick.
+
+A udev rule is needed. See https://github.com/kodi-game/peripheral.xarcade</description>
         <platform>@PLATFORM@</platform>
         <assets>
             <icon>resources/icon.png</icon>

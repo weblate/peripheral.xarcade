@@ -22,8 +22,8 @@
 #include "XArcadeDefines.h"
 #include "utils/CommonDefines.h" // for INVALID_FD
 
-#include "kodi_peripheral_utils.hpp"
-#include "libXBMC_addon.h"
+#include <kodi/addon-instance/Peripheral.h>
+#include <kodi/addon-instance/PeripheralUtils.h>
 
 #include <errno.h>
 #include <linux/input.h>
@@ -71,10 +71,9 @@ const std::vector<CXArcadeDevice::KeyToButtonMap> CXArcadeDevice::m_keyMap = {
   { KEY_F,          1, 13, KEY_DOWN },
 };
 
-CXArcadeDevice::CXArcadeDevice(int fd, unsigned int index, ADDON::CHelper_libXBMC_addon* frontend) :
+CXArcadeDevice::CXArcadeDevice(int fd, unsigned int index) :
   m_fd(fd),
   m_index(index),
-  m_frontend(frontend),
   m_bOpen(false)
 {
 }
@@ -86,9 +85,6 @@ CXArcadeDevice::~CXArcadeDevice()
 
 bool CXArcadeDevice::Open()
 {
-  if (m_frontend == nullptr)
-    return false;
-
   if (!m_bOpen)
   {
     if (m_fd != INVALID_FD)
@@ -123,7 +119,7 @@ JoystickPtr CXArcadeDevice::GetJoystick(unsigned int index)
 {
   if (index % 2 == 0)
   {
-    JoystickPtr player1 = std::make_shared<ADDON::Joystick>(XARCADE_TANKSTICK_PROVIDER, XARCADE_TANKSTICK_NAME_PLAYER_1);
+    JoystickPtr player1 = std::make_shared<kodi::addon::Joystick>(XARCADE_TANKSTICK_PROVIDER, XARCADE_TANKSTICK_NAME_PLAYER_1);
     player1->SetVendorID(XARCADE_TANKSTICK_VENDOR_ID);
     player1->SetProductID(XARCADE_TANKSTICK_PRODUCT_ID);
     player1->SetIndex(GetPeripheralIndex(index));
@@ -133,7 +129,7 @@ JoystickPtr CXArcadeDevice::GetJoystick(unsigned int index)
   }
   else
   {
-    JoystickPtr player2 = std::make_shared<ADDON::Joystick>(XARCADE_TANKSTICK_PROVIDER, XARCADE_TANKSTICK_NAME_PLAYER_2);
+    JoystickPtr player2 = std::make_shared<kodi::addon::Joystick>(XARCADE_TANKSTICK_PROVIDER, XARCADE_TANKSTICK_NAME_PLAYER_2);
     player2->SetVendorID(XARCADE_TANKSTICK_VENDOR_ID);
     player2->SetProductID(XARCADE_TANKSTICK_PRODUCT_ID);
     player2->SetIndex(GetPeripheralIndex(index));
@@ -151,7 +147,7 @@ unsigned int CXArcadeDevice::GetPeripheralIndex(unsigned int playerIndex)
     return m_index * 2 + 1;
 }
 
-void CXArcadeDevice::GetEvents(std::vector<ADDON::PeripheralEvent>& events)
+void CXArcadeDevice::GetEvents(std::vector<kodi::addon::PeripheralEvent>& events)
 {
   if (!IsOpen())
     return;
@@ -189,7 +185,7 @@ void CXArcadeDevice::GetEvents(std::vector<ADDON::PeripheralEvent>& events)
     if (playerIndex != -1 && buttonIndex != -1)
     {
       JOYSTICK_STATE_BUTTON state = event.value > 0 ? JOYSTICK_STATE_BUTTON_PRESSED : JOYSTICK_STATE_BUTTON_UNPRESSED;
-      events.push_back(ADDON::PeripheralEvent(GetPeripheralIndex(playerIndex), buttonIndex, state));
+      events.push_back(kodi::addon::PeripheralEvent(GetPeripheralIndex(playerIndex), buttonIndex, state));
     }
   }
 }

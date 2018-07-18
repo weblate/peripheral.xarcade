@@ -22,10 +22,13 @@
 #include <memory>
 #include <vector>
 
-namespace ADDON
+namespace kodi
+{
+namespace addon
 {
   class Joystick;
-};
+}
+}
 
 namespace XARCADE
 {
@@ -33,6 +36,6 @@ namespace XARCADE
   typedef std::shared_ptr<CXArcadeDevice> DevicePtr;
   typedef std::vector<DevicePtr>          DeviceVector;
 
-  typedef std::shared_ptr<ADDON::Joystick> JoystickPtr;
+  typedef std::shared_ptr<kodi::addon::Joystick> JoystickPtr;
   typedef std::vector<JoystickPtr>         JoystickVector;
 }

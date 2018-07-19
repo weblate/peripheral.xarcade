@@ -1,6 +1,6 @@
 # X-Arcade Tankstick driver for Kodi
 
-![X-Arcade Tankstick](peripheral.xarcade/icon.png)
+![X-Arcade Tankstick](peripheral.xarcade/resources/icon.png)
 
 This is a peripheral add-on for Kodi that enables input from the X-Arcade Tankstick. I found [Xarcade2Jstick](https://github.com/petrockblog/Xarcade2Jstick) to be a helpful reference. Thank you Xarcade2Jstick author!
 

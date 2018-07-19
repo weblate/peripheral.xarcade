@@ -30,19 +30,12 @@ namespace XARCADE
 {
   class CXArcadeScanner
   {
-  private:
-    CXArcadeScanner();
-
   public:
-    static CXArcadeScanner& Get();
-
-    void Initailize(ADDON::CHelper_libXBMC_addon* frontend);
-    void Deinitailize();
+    CXArcadeScanner() = default;
 
     DeviceVector GetDevices();
 
   private:
-    ADDON::CHelper_libXBMC_addon* m_frontend;
-    unsigned int m_nextIndex;
+    unsigned int m_nextIndex = 0;
   };
 }

@@ -24,7 +24,7 @@
 #include "XArcadeUtils.h"
 #include "utils/CommonDefines.h" // for INVALID_FD
 
-#include "libXBMC_addon.h"
+#include <kodi/AddonBase.h>
 
 #include <fcntl.h>
 #include <glob.h>
@@ -35,40 +35,15 @@
 
 using namespace XARCADE;
 
-CXArcadeScanner::CXArcadeScanner() :
-  m_frontend(nullptr),
-  m_nextIndex(0)
-{
-}
-
-CXArcadeScanner& CXArcadeScanner::Get()
-{
-  static CXArcadeScanner instance;
-  return instance;
-}
-
-void CXArcadeScanner::Initailize(ADDON::CHelper_libXBMC_addon* frontend)
-{
-  m_frontend = frontend;
-}
-
-void CXArcadeScanner::Deinitailize()
-{
-  m_frontend = nullptr;
-}
-
 DeviceVector CXArcadeScanner::GetDevices()
 {
   DeviceVector devices;
-
-  if (m_frontend == nullptr)
-    return devices;
 
   glob_t pglob;
   int rc = glob("/dev/input/event*", 0, nullptr, &pglob);
   if (rc != 0)
   {
-    m_frontend->Log(ADDON::LOG_ERROR, "Failed to open event devices");
+    kodi::Log(ADDON_LOG_ERROR, "Failed to open event devices");
     return devices;
   }
 
@@ -86,7 +61,7 @@ DeviceVector CXArcadeScanner::GetDevices()
     if (CXArcadeUtils::IsXArcadeDevice(name))
     {
       // Found device
-      devices.emplace_back(std::make_shared<CXArcadeDevice>(fevdev, m_nextIndex++, m_frontend));
+      devices.emplace_back(std::make_shared<CXArcadeDevice>(fevdev, m_nextIndex++));
     }
     else
     {

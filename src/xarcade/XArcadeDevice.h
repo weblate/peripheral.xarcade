@@ -23,10 +23,12 @@
 
 #include <vector>
 
-namespace ADDON
+namespace kodi
 {
-  class CHelper_libXBMC_addon;
+namespace addon
+{
   class PeripheralEvent;
+}
 }
 
 namespace XARCADE
@@ -34,7 +36,7 @@ namespace XARCADE
   class CXArcadeDevice
   {
   public:
-    CXArcadeDevice(int fd, unsigned int index, ADDON::CHelper_libXBMC_addon* frontend);
+    CXArcadeDevice(int fd, unsigned int index);
     ~CXArcadeDevice();
 
     bool Open();
@@ -45,7 +47,7 @@ namespace XARCADE
     JoystickPtr GetJoystick(unsigned int index);
     unsigned int GetPeripheralIndex(unsigned int playerIndex);
 
-    void GetEvents(std::vector<ADDON::PeripheralEvent>& events);
+    void GetEvents(std::vector<kodi::addon::PeripheralEvent>& events);
 
   private:
     struct KeyToButtonMap
@@ -61,7 +63,6 @@ namespace XARCADE
     // Construction parameters
     int m_fd;
     const unsigned int m_index;
-    ADDON::CHelper_libXBMC_addon* const m_frontend;
 
     bool m_bOpen;
   };

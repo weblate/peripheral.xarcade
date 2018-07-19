@@ -20,6 +20,8 @@
 
 #define PERIPHERAL_ADDON_JOYSTICKS
 
+#include "addon.h"
+
 #include "utils/CommonMacros.h"
 #include "xarcade/XArcadeDefines.h"
 #include "xarcade/XArcadeDevice.h"
@@ -27,181 +29,117 @@
 #include "xarcade/XArcadeTypes.h"
 #include "xarcade/XArcadeUtils.h"
 
-#include "xbmc_addon_dll.h"
-#include "kodi_peripheral_dll.h"
-#include "kodi_peripheral_utils.hpp"
-#include "libXBMC_addon.h"
+#include <kodi/addon-instance/PeripheralUtils.h>
 
 #include <algorithm>
 
-namespace XARCADE
-{
-  ADDON::CHelper_libXBMC_addon* FRONTEND = nullptr;
-
-  DeviceVector DEVICES;
-}
-
 using namespace XARCADE;
 
-extern "C"
-{
-
-ADDON_STATUS ADDON_Create(void* callbacks, void* props)
-{
-  if (callbacks != nullptr)
-  {
-    FRONTEND = new ADDON::CHelper_libXBMC_addon;
-    if (!FRONTEND || !FRONTEND->RegisterMe(callbacks))
-    {
-      FRONTEND = nullptr;
-      return ADDON_STATUS_PERMANENT_FAILURE;
-    }
-
-    CXArcadeScanner::Get().Initailize(FRONTEND);
-  }
-
-  return ADDON_GetStatus();
-}
-
-void ADDON_Stop()
+CPeripheralXArcade::CPeripheralXArcade() :
+  m_scanner(new CXArcadeScanner)
 {
 }
 
-void ADDON_Destroy()
+ADDON_STATUS CPeripheralXArcade::Create()
 {
-  CXArcadeScanner::Get().Deinitailize();
-
-  DEVICES.clear();
-
-  SAFE_DELETE(FRONTEND);
+  return GetStatus();
 }
 
-ADDON_STATUS ADDON_GetStatus()
-{
-  if (FRONTEND == nullptr)
-    return ADDON_STATUS_UNKNOWN;
+CPeripheralXArcade::~CPeripheralXArcade() = default;
 
-  return ADDON_STATUS_OK;
-}
-
-bool ADDON_HasSettings()
-{
-  return false;
-}
-
-unsigned int ADDON_GetSettings(ADDON_StructSetting*** sSet)
-{
-  return 0;
-}
-
-ADDON_STATUS ADDON_SetSetting(const char* settingName, const void* settingValue)
+ADDON_STATUS CPeripheralXArcade::GetStatus()
 {
   return ADDON_STATUS_OK;
 }
 
-void ADDON_FreeSettings()
+ADDON_STATUS CPeripheralXArcade::SetSetting(const std::string& settingName, const kodi::CSettingValue& settingValue)
 {
+  return ADDON_STATUS_OK;
 }
 
-void ADDON_Announce(const char* flag, const char* sender, const char* message, const void* data)
+void CPeripheralXArcade::GetCapabilities(PERIPHERAL_CAPABILITIES &capabilities)
 {
+  capabilities.provides_joysticks = true;
+  capabilities.provides_joystick_rumble = false;
+  capabilities.provides_joystick_power_off = false;
+  capabilities.provides_buttonmaps = false;
 }
 
-const char* GetPeripheralAPIVersion(void)
-{
-  return PERIPHERAL_API_VERSION;
-}
-
-const char* GetMinimumPeripheralAPIVersion(void)
-{
-  return PERIPHERAL_MIN_API_VERSION;
-}
-
-PERIPHERAL_ERROR GetAddonCapabilities(PERIPHERAL_CAPABILITIES* pCapabilities)
-{
-  if (pCapabilities == nullptr)
-    return PERIPHERAL_ERROR_INVALID_PARAMETERS;
-
-  pCapabilities->provides_joysticks = true;
-
-  return PERIPHERAL_NO_ERROR;
-}
-
-PERIPHERAL_ERROR PerformDeviceScan(unsigned int* peripheral_count, PERIPHERAL_INFO** scan_results)
+PERIPHERAL_ERROR CPeripheralXArcade::PerformDeviceScan(unsigned int* peripheral_count, PERIPHERAL_INFO** scan_results)
 {
   if (peripheral_count == nullptr || scan_results == nullptr)
     return PERIPHERAL_ERROR_INVALID_PARAMETERS;
 
   // Close disconnected devices
-  DEVICES.erase(std::remove_if(DEVICES.begin(), DEVICES.end(),
+  m_devices.erase(std::remove_if(m_devices.begin(), m_devices.end(),
     [](const DevicePtr& device)
     {
       return !device->IsOpen();
-    }), DEVICES.end());
+    }), m_devices.end());
 
   // Open new devices
-  DeviceVector newDevices = CXArcadeScanner::Get().GetDevices();
+  DeviceVector newDevices = m_scanner->GetDevices();
   for (auto& device : newDevices)
   {
     if (device->Open())
-      DEVICES.emplace_back(std::move(device));
+      m_devices.emplace_back(std::move(device));
   }
 
   // Get peripheral info
   JoystickVector joysticks;
-  for (auto& device : DEVICES)
+  for (auto& device : m_devices)
     device->GetJoystickInfo(joysticks);
 
   // Upcast array pointers
-  std::vector<ADDON::Peripheral*> peripherals;
+  std::vector<kodi::addon::Peripheral*> peripherals;
   for (auto& joystick : joysticks)
     peripherals.push_back(joystick.get());
 
   *peripheral_count = peripherals.size();
-  ADDON::Peripherals::ToStructs(peripherals, scan_results);
+  kodi::addon::Peripherals::ToStructs(peripherals, scan_results);
 
   return PERIPHERAL_NO_ERROR;
 }
 
-void FreeScanResults(unsigned int peripheral_count, PERIPHERAL_INFO* scan_results)
+void CPeripheralXArcade::FreeScanResults(unsigned int peripheral_count, PERIPHERAL_INFO* scan_results)
 {
-  ADDON::Peripherals::FreeStructs(peripheral_count, scan_results);
+  kodi::addon::Peripherals::FreeStructs(peripheral_count, scan_results);
 }
 
-PERIPHERAL_ERROR GetEvents(unsigned int* event_count, PERIPHERAL_EVENT** events)
+PERIPHERAL_ERROR CPeripheralXArcade::GetEvents(unsigned int* event_count, PERIPHERAL_EVENT** events)
 {
   if (event_count == nullptr || events == nullptr)
     return PERIPHERAL_ERROR_INVALID_PARAMETERS;
 
-  std::vector<ADDON::PeripheralEvent> peripheralEvents;
+  std::vector<kodi::addon::PeripheralEvent> peripheralEvents;
 
-  for (auto& device : DEVICES)
+  for (auto& device : m_devices)
     device->GetEvents(peripheralEvents);
 
   *event_count = peripheralEvents.size();
-  ADDON::PeripheralEvents::ToStructs(peripheralEvents, events);
+  kodi::addon::PeripheralEvents::ToStructs(peripheralEvents, events);
 
   return PERIPHERAL_NO_ERROR;
 }
 
-void FreeEvents(unsigned int event_count, PERIPHERAL_EVENT* events)
+void CPeripheralXArcade::FreeEvents(unsigned int event_count, PERIPHERAL_EVENT* events)
 {
-  ADDON::PeripheralEvents::FreeStructs(event_count, events);
+  kodi::addon::PeripheralEvents::FreeStructs(event_count, events);
 }
 
-bool SendEvent(const PERIPHERAL_EVENT* event)
+bool CPeripheralXArcade::SendEvent(const PERIPHERAL_EVENT* event)
 {
   return false;
 }
 
-PERIPHERAL_ERROR GetJoystickInfo(unsigned int index, JOYSTICK_INFO* info)
+PERIPHERAL_ERROR CPeripheralXArcade::GetJoystickInfo(unsigned int index, JOYSTICK_INFO* info)
 {
   if (info == nullptr)
     return PERIPHERAL_ERROR_INVALID_PARAMETERS;
 
   JoystickPtr joystick;
 
-  for (auto& device : DEVICES)
+  for (auto& device : m_devices)
   {
     if (device->GetPeripheralIndex(0) == index ||
         device->GetPeripheralIndex(1) == index)
@@ -213,69 +151,19 @@ PERIPHERAL_ERROR GetJoystickInfo(unsigned int index, JOYSTICK_INFO* info)
 
   if (joystick)
   {
-    joystick->ADDON::Joystick::ToStruct(*info);
+    joystick->kodi::addon::Joystick::ToStruct(*info);
     return PERIPHERAL_NO_ERROR;
   }
 
   return PERIPHERAL_ERROR_NOT_CONNECTED;
 }
 
-void FreeJoystickInfo(JOYSTICK_INFO* info)
+void CPeripheralXArcade::FreeJoystickInfo(JOYSTICK_INFO* info)
 {
   if (!info)
     return;
 
-  ADDON::Joystick::FreeStruct(*info);
+  kodi::addon::Joystick::FreeStruct(*info);
 }
 
-PERIPHERAL_ERROR GetFeatures(const JOYSTICK_INFO* joystick, const char* controller_id,
-                             unsigned int* feature_count, JOYSTICK_FEATURE** features)
-{
-  return PERIPHERAL_ERROR_FAILED;
-}
-
-void FreeFeatures(unsigned int feature_count, JOYSTICK_FEATURE* features)
-{
-}
-
-PERIPHERAL_ERROR MapFeatures(const JOYSTICK_INFO* joystick, const char* controller_id,
-                             unsigned int feature_count, const JOYSTICK_FEATURE* features)
-{
-  return PERIPHERAL_ERROR_FAILED;
-}
-
-PERIPHERAL_ERROR GetIgnoredPrimitives(const JOYSTICK_INFO* joystick,
-                                      unsigned int* primitive_count,
-                                      JOYSTICK_DRIVER_PRIMITIVE** primitives)
-{
-  return PERIPHERAL_ERROR_FAILED;
-}
-
-void FreePrimitives(unsigned int primitive_count, JOYSTICK_DRIVER_PRIMITIVE* primitives)
-{
-}
-
-PERIPHERAL_ERROR SetIgnoredPrimitives(const JOYSTICK_INFO* joystick,
-                                      unsigned int primitive_count,
-                                      const JOYSTICK_DRIVER_PRIMITIVE* primitives)
-{
-  return PERIPHERAL_ERROR_FAILED;
-}
-
-void SaveButtonMap(const JOYSTICK_INFO* joystick)
-{
-}
-
-void RevertButtonMap(const JOYSTICK_INFO* joystick)
-{
-}
-
-void ResetButtonMap(const JOYSTICK_INFO* joystick, const char* controller_id)
-{
-}
-
-void PowerOffJoystick(unsigned int index)
-{
-}
-
-} // extern "C"
+ADDONCREATOR(CPeripheralXArcade) // Don't touch this!

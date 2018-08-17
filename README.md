@@ -4,6 +4,10 @@
 
 This is a peripheral add-on for Kodi that enables input from the X-Arcade Tankstick. I found [Xarcade2Jstick](https://github.com/petrockblog/Xarcade2Jstick) to be a helpful reference. Thank you Xarcade2Jstick author!
 
+## Wiki help
+
+The wiki article is: [HOW-TO:X-Arcade Tankstick in Kodi](https://kodi.wiki/view/HOW-TO:X-Arcade_Tankstick_in_Kodi).
+
 ## Fixing permissions
 
 In general the `/dev/input/event*` devices can only be opened by root. This is to prevent keystroke logging security attacks.

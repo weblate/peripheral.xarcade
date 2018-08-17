@@ -14,7 +14,7 @@
         <summary lang="en_GB">X-Arcade Tankstick driver</summary>
         <description lang="en_GB">This driver enables input from the X-Arcade Tankstick.
 
-A udev rule is needed. See https://github.com/kodi-game/peripheral.xarcade</description>
+A udev rule is needed. See https://kodi.wiki/view/Tankstick</description>
         <platform>@PLATFORM@</platform>
         <assets>
             <icon>resources/icon.png</icon>

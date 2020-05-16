@@ -1,36 +1,50 @@
-.build
-.cproject
-.deps
-.libs
-.project
-.settings
+# build artifacts
+build/
+peripheral.*/addon.xml
 
-build
-Build
+# Debian build files
+debian/changelog
+debian/files
+debian/*.log
+debian/*.substvars
+debian/.debhelper/
+debian/tmp/
+debian/kodi-peripheral-*/
+obj-x86_64-linux-gnu/
 
-*.o
-*.a
-*.P
-*.lo
-*.la
-*.zip
-*.m4
+# commonly used editors
+# vim
+*.swp
 
-*.idb
-*.tlog
-*.lastbuildstate
+# Eclipse
+*.project
+*.cproject
+.classpath
+*.sublime-*
+.settings/
 
-# Windows specific generated files
-*.exp
-*.lib
-*.pdb
-*.ilk
-*.obj
-*.suo
-*.sdf
-*.opensdf
-*.vcxproj.user
+# KDevelop 4
+*.kdev4
 
-peripheral.xarcade/*.so
-peripheral.xarcade/*.dll
-peripheral.xarcade/addon.xml
+# gedit
+*~
+
+# CLion
+/.idea
+
+# clion
+.idea/
+
+# to prevent add after a "git format-patch VALUE" and "git add ." call
+/*.patch
+
+# Visual Studio Code
+.vscode
+
+# to prevent add if project code opened by Visual Studio over CMake file
+.vs/
+
+# General MacOS
+.DS_Store
+.AppleDouble
+.LSOverride

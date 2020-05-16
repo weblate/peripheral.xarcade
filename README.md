@@ -1,3 +1,5 @@
+[![License: GPL-2.0-or-later](https://img.shields.io/badge/License-GPL%20v2+-blue.svg)](LICENSE.md)
+
 # X-Arcade Tankstick driver for Kodi
 
 ![X-Arcade Tankstick](peripheral.xarcade/resources/icon.png)

@@ -17,6 +17,7 @@
 A udev rule is needed. See https://kodi.wiki/view/Tankstick</description>
         <platform>@PLATFORM@</platform>
         <license>GPL-2.0-or-later</license>
+        <source>https://github.com/kodi-game/peripheral.xarcade</source>
         <assets>
             <icon>resources/icon.png</icon>
         </assets>

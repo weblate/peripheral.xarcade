@@ -1,4 +1,6 @@
 [![License: GPL-2.0-or-later](https://img.shields.io/badge/License-GPL%20v2+-blue.svg)](LICENSE.md)
+[![Build Status](https://travis-ci.org/kodi-game/peripheral.xarcade.svg?branch=Matrix)](https://travis-ci.org/kodi-game/peripheral.xarcade/branches)
+[![Build Status](https://jenkins.kodi.tv/view/Addons/job/kodi-game/job/peripheral.xarcade/job/Matrix/badge/icon)](https://jenkins.kodi.tv/blue/organizations/jenkins/kodi-game%2Fperipheral.xarcade/branches)
 
 # X-Arcade Tankstick driver for Kodi
 

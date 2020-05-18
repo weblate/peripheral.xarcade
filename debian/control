@@ -1,9 +1,9 @@
 Source: kodi-peripheral-xarcade
 Priority: optional
-Maintainer: wsnipex <wsnipex@a1.net>
-Build-Depends: debhelper (>= 9.0.0), cmake (>= 3.1),
-               kodi-addon-dev (>= 2:18.0), pkg-config (>= 0.29.0)
-Standards-Version: 3.9.8
+Maintainer: Nobody <nobody@kodi.tv>
+Build-Depends: debhelper (>= 9.0.0), cmake, kodi-addon-dev,
+               pkg-config
+Standards-Version: 4.1.2
 Section: libs
 
 Package: kodi-peripheral-xarcade

@@ -10,8 +10,7 @@
 #include "XArcadeDefines.h"
 #include "utils/CommonDefines.h" // for INVALID_FD
 
-#include <kodi/addon-instance/Peripheral.h>
-#include <kodi/addon-instance/PeripheralUtils.h>
+#include <kodi/addon-instance/peripheral/PeripheralUtils.h>
 
 #include <errno.h>
 #include <linux/input.h>

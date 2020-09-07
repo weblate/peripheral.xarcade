@@ -27,14 +27,11 @@ public:
   ADDON_STATUS GetStatus() override;
   ADDON_STATUS SetSetting(const std::string& settingName, const kodi::CSettingValue& settingValue) override;
 
-  void GetCapabilities(PERIPHERAL_CAPABILITIES &capabilities) override;
-  PERIPHERAL_ERROR PerformDeviceScan(unsigned int* peripheral_count, PERIPHERAL_INFO** scan_results) override;
-  void FreeScanResults(unsigned int peripheral_count, PERIPHERAL_INFO* scan_results) override;
-  PERIPHERAL_ERROR GetEvents(unsigned int* event_count, PERIPHERAL_EVENT** events) override;
-  void FreeEvents(unsigned int event_count, PERIPHERAL_EVENT* events) override;
-  bool SendEvent(const PERIPHERAL_EVENT* event) override;
-  PERIPHERAL_ERROR GetJoystickInfo(unsigned int index, JOYSTICK_INFO* info) override;
-  void FreeJoystickInfo(JOYSTICK_INFO* info) override;
+  void GetCapabilities(kodi::addon::PeripheralCapabilities& capabilities) override;
+  PERIPHERAL_ERROR PerformDeviceScan(std::vector<std::shared_ptr<kodi::addon::Peripheral>>& scan_results) override;
+  PERIPHERAL_ERROR GetEvents(std::vector<kodi::addon::PeripheralEvent>& events) override;
+  bool SendEvent(const kodi::addon::PeripheralEvent& event) override;
+  PERIPHERAL_ERROR GetJoystickInfo(unsigned int index, kodi::addon::Joystick& info) override;
 
 private:
   XARCADE::DeviceVector m_devices;

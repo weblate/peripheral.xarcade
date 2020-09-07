@@ -17,8 +17,6 @@
 #include "xarcade/XArcadeTypes.h"
 #include "xarcade/XArcadeUtils.h"
 
-#include <kodi/addon-instance/PeripheralUtils.h>
-
 #include <algorithm>
 
 using namespace XARCADE;
@@ -45,19 +43,16 @@ ADDON_STATUS CPeripheralXArcade::SetSetting(const std::string& settingName, cons
   return ADDON_STATUS_OK;
 }
 
-void CPeripheralXArcade::GetCapabilities(PERIPHERAL_CAPABILITIES &capabilities)
+void CPeripheralXArcade::GetCapabilities(kodi::addon::PeripheralCapabilities& capabilities)
 {
-  capabilities.provides_joysticks = true;
-  capabilities.provides_joystick_rumble = false;
-  capabilities.provides_joystick_power_off = false;
-  capabilities.provides_buttonmaps = false;
+  capabilities.SetProvidesJoysticks(true);
+  capabilities.SetProvidesJoystickRumble(false);
+  capabilities.SetProvidesJoystickPowerOff(false);
+  capabilities.SetProvidesButtonmaps(false);
 }
 
-PERIPHERAL_ERROR CPeripheralXArcade::PerformDeviceScan(unsigned int* peripheral_count, PERIPHERAL_INFO** scan_results)
+PERIPHERAL_ERROR CPeripheralXArcade::PerformDeviceScan(std::vector<std::shared_ptr<kodi::addon::Peripheral>>& scan_results)
 {
-  if (peripheral_count == nullptr || scan_results == nullptr)
-    return PERIPHERAL_ERROR_INVALID_PARAMETERS;
-
   // Close disconnected devices
   m_devices.erase(std::remove_if(m_devices.begin(), m_devices.end(),
     [](const DevicePtr& device)
@@ -81,50 +76,26 @@ PERIPHERAL_ERROR CPeripheralXArcade::PerformDeviceScan(unsigned int* peripheral_
   // Upcast array pointers
   std::vector<kodi::addon::Peripheral*> peripherals;
   for (auto& joystick : joysticks)
-    peripherals.push_back(joystick.get());
-
-  *peripheral_count = peripherals.size();
-  kodi::addon::Peripherals::ToStructs(peripherals, scan_results);
+    scan_results.emplace_back(joystick);
 
   return PERIPHERAL_NO_ERROR;
 }
 
-void CPeripheralXArcade::FreeScanResults(unsigned int peripheral_count, PERIPHERAL_INFO* scan_results)
+PERIPHERAL_ERROR CPeripheralXArcade::GetEvents(std::vector<kodi::addon::PeripheralEvent>& events)
 {
-  kodi::addon::Peripherals::FreeStructs(peripheral_count, scan_results);
-}
-
-PERIPHERAL_ERROR CPeripheralXArcade::GetEvents(unsigned int* event_count, PERIPHERAL_EVENT** events)
-{
-  if (event_count == nullptr || events == nullptr)
-    return PERIPHERAL_ERROR_INVALID_PARAMETERS;
-
-  std::vector<kodi::addon::PeripheralEvent> peripheralEvents;
-
   for (auto& device : m_devices)
-    device->GetEvents(peripheralEvents);
-
-  *event_count = peripheralEvents.size();
-  kodi::addon::PeripheralEvents::ToStructs(peripheralEvents, events);
+    device->GetEvents(events);
 
   return PERIPHERAL_NO_ERROR;
 }
 
-void CPeripheralXArcade::FreeEvents(unsigned int event_count, PERIPHERAL_EVENT* events)
-{
-  kodi::addon::PeripheralEvents::FreeStructs(event_count, events);
-}
-
-bool CPeripheralXArcade::SendEvent(const PERIPHERAL_EVENT* event)
+bool CPeripheralXArcade::SendEvent(const kodi::addon::PeripheralEvent& event)
 {
   return false;
 }
 
-PERIPHERAL_ERROR CPeripheralXArcade::GetJoystickInfo(unsigned int index, JOYSTICK_INFO* info)
+PERIPHERAL_ERROR CPeripheralXArcade::GetJoystickInfo(unsigned int index, kodi::addon::Joystick& info)
 {
-  if (info == nullptr)
-    return PERIPHERAL_ERROR_INVALID_PARAMETERS;
-
   JoystickPtr joystick;
 
   for (auto& device : m_devices)
@@ -139,19 +110,11 @@ PERIPHERAL_ERROR CPeripheralXArcade::GetJoystickInfo(unsigned int index, JOYSTIC
 
   if (joystick)
   {
-    joystick->kodi::addon::Joystick::ToStruct(*info);
+    info = *joystick;
     return PERIPHERAL_NO_ERROR;
   }
 
   return PERIPHERAL_ERROR_NOT_CONNECTED;
-}
-
-void CPeripheralXArcade::FreeJoystickInfo(JOYSTICK_INFO* info)
-{
-  if (!info)
-    return;
-
-  kodi::addon::Joystick::FreeStruct(*info);
 }
 
 ADDONCREATOR(CPeripheralXArcade) // Don't touch this!

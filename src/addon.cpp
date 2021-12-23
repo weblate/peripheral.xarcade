@@ -28,17 +28,12 @@ CPeripheralXArcade::CPeripheralXArcade() :
 
 ADDON_STATUS CPeripheralXArcade::Create()
 {
-  return GetStatus();
+  return ADDON_STATUS_OK;
 }
 
 CPeripheralXArcade::~CPeripheralXArcade() = default;
 
-ADDON_STATUS CPeripheralXArcade::GetStatus()
-{
-  return ADDON_STATUS_OK;
-}
-
-ADDON_STATUS CPeripheralXArcade::SetSetting(const std::string& settingName, const kodi::CSettingValue& settingValue)
+ADDON_STATUS CPeripheralXArcade::SetSetting(const std::string& settingName, const kodi::addon::CSettingValue& settingValue)
 {
   return ADDON_STATUS_OK;
 }

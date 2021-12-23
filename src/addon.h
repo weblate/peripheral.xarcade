@@ -15,7 +15,7 @@ namespace XARCADE
   class CXArcadeScanner;
 }
 
-class ATTRIBUTE_HIDDEN CPeripheralXArcade
+class ATTR_DLL_LOCAL CPeripheralXArcade
   : public kodi::addon::CAddonBase,
     public kodi::addon::CInstancePeripheral
 {
@@ -24,8 +24,7 @@ public:
   ~CPeripheralXArcade() override;
 
   ADDON_STATUS Create() override;
-  ADDON_STATUS GetStatus() override;
-  ADDON_STATUS SetSetting(const std::string& settingName, const kodi::CSettingValue& settingValue) override;
+  ADDON_STATUS SetSetting(const std::string& settingName, const kodi::addon::CSettingValue& settingValue) override;
 
   void GetCapabilities(kodi::addon::PeripheralCapabilities& capabilities) override;
   PERIPHERAL_ERROR PerformDeviceScan(std::vector<std::shared_ptr<kodi::addon::Peripheral>>& scan_results) override;

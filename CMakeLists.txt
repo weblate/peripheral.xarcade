@@ -25,6 +25,7 @@ set(XARCADE_HEADERS
   src/xarcade/XArcadeScanner.h
   src/xarcade/XArcadeTypes.h
   src/xarcade/XArcadeUtils.h
+  src/addon.h
 )
 
 # ------------------------------------------------------------------------------

@@ -17,7 +17,6 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 4.9\n"
 
-#, fuzzy
 msgctxt "Addon Summary"
 msgid "X-Arcade Tankstick driver"
 msgstr "Pilote Tankstick X-Arcade"
@@ -25,3 +24,5 @@ msgstr "Pilote Tankstick X-Arcade"
 msgctxt "Addon Description"
 msgid "This driver enables input from the X-Arcade Tankstick.[CR][CR]A udev rule is needed. See https://kodi.wiki/view/Tankstick"
 msgstr ""
+
+#, fuzzy

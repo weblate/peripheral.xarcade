@@ -24,4 +24,3 @@ msgstr "Pilote Tankstick X-Arcade"
 msgctxt "Addon Description"
 msgid "This driver enables input from the X-Arcade Tankstick.[CR][CR]A udev rule is needed. See https://kodi.wiki/view/Tankstick"
 msgstr "Ce pilote active la saisie depuis le X-Arcade Tankstick.[CR][CR]Une règle udev est nécessaire. Voir https://kodi.wiki/view/Tankstick"
-

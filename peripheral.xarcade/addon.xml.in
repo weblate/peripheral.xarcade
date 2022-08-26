@@ -17,6 +17,7 @@
         <assets>
             <icon>resources/icon.png</icon>
         </assets>
+        <summary lang="ca_ES">Controlador X-Arcade Tankstick</summary>
         <summary lang="da_DK">X-Arcade Tankstick driver</summary>
         <summary lang="de_DE">Treiber für X-Arcade Tankstick</summary>
         <summary lang="en_GB">X-Arcade Tankstick driver</summary>
@@ -28,10 +29,12 @@
         <summary lang="nb_NO">X-Arcade Tankstick driver</summary>
         <summary lang="pl_PL">Sterownik X-Arcade Tankstick</summary>
         <summary lang="pt_BR">Driver X-Arcade Tankstick</summary>
+        <summary lang="pt_PT">Controlador de X-Arcade Tankstick</summary>
         <summary lang="ru_RU">Драйвер X-Arcade Tankstick</summary>
         <summary lang="sv_SE">X-Arcade Tankstick-drivrutin</summary>
         <summary lang="tr_TR">X-Arcade Tankstick sürücüsü</summary>
         <summary lang="zh_CN">X-Arcade Tankstick 驱动</summary>
+        <description lang="ca_ES">Aquest controlador permet l&apos;entrada de l&apos;X-Arcade Tankstick.[CR][CR]Es necessita una regla udev. Consulta https://kodi.wiki/view/Tankstick</description>
         <description lang="da_DK">Denne driver muliggør input fra X-Arcade Tankstick.[CR][CR]En udev-regel er nødvendig. Se https://kodi.wiki/view/Tankstick</description>
         <description lang="de_DE">Dieser Treiber ermöglicht Eingaben mit dem X-Arcade Tankstick.[CR][CR]Eine udev-Regel wird benötigt. Weitere Informationen unter https://kodi.wiki/view/Tankstick</description>
         <description lang="en_GB">This driver enables input from the X-Arcade Tankstick.[CR][CR]A udev rule is needed. See https://kodi.wiki/view/Tankstick</description>
@@ -43,6 +46,7 @@
         <description lang="nb_NO">Denne driveren muliggjør input fra X-Arcade Tankstick.[CR][CR]En udev-regel er nødvendig. Se https://kodi.wiki/view/Tankstick</description>
         <description lang="pl_PL">Ten sterownik umożliwia odczyt danych wejściowych z urządzenia X-Arcade Tankstick.[CR][CR]Potrzebna jest reguła udev. Zobacz https://kodi.wiki/view/Tankstick</description>
         <description lang="pt_BR">Este driver habilita a entrada para X-Arcade Tankstick. [CR][CR]Uma regra udev é necessária. Consulte https://kodi.wiki/view/Tankstick</description>
+        <description lang="pt_PT">Este controlador permite a entrada desde o X-Arcade Tankstick.[CR][CR]Uma regra do udev é necessária. Veja https://kodi.wiki/view/Tankstick</description>
         <description lang="ru_RU">Этот драйвер позволяет вводить данные с X-Arcade Tankstick.[CR][CR]Необходимо правило udev. См. https://kodi.wiki/view/Tankstick</description>
         <description lang="sv_SE">Denna drivrutin möjliggör inmatning från X-Arcade Tankstick.[CR][CR]En udev-regel behövs. Se https://kodi.wiki/view/Tankstick</description>
         <description lang="tr_TR">Bu sürücü, X-Arcade Tankstick&apos;ten giriş yapılmasını sağlar.[CR][CR]Bir udev kuralı gereklidir. https://kodi.wiki/view/Tankstick adresine bakınız</description>

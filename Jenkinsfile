@@ -1,1 +1,1 @@
-buildPlugin(version: "Nexus", platforms: ['ubuntu-ppa'])
+buildPlugin(version: "Omega", platforms: ['ubuntu-ppa'])

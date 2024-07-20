@@ -1,1 +1,1 @@
-buildPlugin(version: "Omega", platforms: ['ubuntu-ppa'])
+buildPlugin(version: "Piers", platforms: ['ubuntu-ppa'])

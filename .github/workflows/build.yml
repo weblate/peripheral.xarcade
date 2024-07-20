@@ -11,7 +11,7 @@ jobs:
       matrix:
         include:
         - name: "Debian package test"
-          os: ubuntu-18.04
+          os: ubuntu-latest
           CC: gcc
           CXX: g++
           DEBIAN_BUILD: true

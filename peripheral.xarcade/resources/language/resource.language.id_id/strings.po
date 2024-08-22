@@ -23,4 +23,4 @@ msgstr "Penggerak X-Arcade Tankstick"
 
 msgctxt "Addon Description"
 msgid "This driver enables input from the X-Arcade Tankstick.[CR][CR]A udev rule is needed. See https://kodi.wiki/view/Tankstick"
-msgstr "Penggerak ini mengaktifkan masukan dari X-Arcade Tankstick.[CR][CR]Sebuah pengaturan udev diperlukan. Lihat"
+msgstr "Penggerak ini mengaktifkan masukan dari X-Arcade Tankstick.[CR][CR]Sebuah pengaturan udev diperlukan. Lihat https://kodi.wiki/view/Tankstick"

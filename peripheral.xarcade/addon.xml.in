@@ -41,7 +41,7 @@
         <description lang="da_DK">Denne driver muliggør input fra X-Arcade Tankstick.[CR][CR]En udev-regel er nødvendig. Se https://kodi.wiki/view/Tankstick</description>
         <description lang="de_DE">Dieser Treiber ermöglicht Eingaben mit dem X-Arcade Tankstick.[CR][CR]Eine udev-Regel wird benötigt. Weitere Informationen unter https://kodi.wiki/view/Tankstick</description>
         <description lang="en_GB">This driver enables input from the X-Arcade Tankstick.[CR][CR]A udev rule is needed. See https://kodi.wiki/view/Tankstick</description>
-        <description lang="es_ES">Este driver activa la entrada de X-Arcade Tankstick.[CR][CR] se necesita una regla udev. Mire en https://kodi.wiki/view/Tankstick</description>
+        <description lang="es_ES">Este driver activa la entrada de X-Arcade Tankstick.[CR][CR]Se necesita una regla udev. Ver https://kodi.wiki/view/Tankstick</description>
         <description lang="es_MX">Este controlador habilita la entrada del X-Arcade Tankstick.[CR][CR]Se requiere una regla udev. Consulta https://kodi.wiki/view/Tankstick</description>
         <description lang="fi_FI">Tämä ajuri mahdollistaa X-Arcade Tankstick -ohjaimen käytön.[CR][CR]Tarvitaan udev-sääntö. Lue https://kodi.wiki/view/Tankstick</description>
         <description lang="fr_FR">Ce pilote active la saisie depuis le X-Arcade Tankstick.[CR][CR]Une règle udev est nécessaire. Voir https://kodi.wiki/view/Tankstick</description>

@@ -17,6 +17,7 @@
         <assets>
             <icon>resources/icon.png</icon>
         </assets>
+        <summary lang="af_ZA">X-Arcade Tankstick drywer</summary>
         <summary lang="ca_ES">Controlador X-Arcade Tankstick</summary>
         <summary lang="da_DK">X-Arcade Tankstick driver</summary>
         <summary lang="de_DE">Treiber für X-Arcade Tankstick</summary>
@@ -38,6 +39,7 @@
         <summary lang="sv_SE">X-Arcade Tankstick-drivrutin</summary>
         <summary lang="tr_TR">X-Arcade Tankstick sürücüsü</summary>
         <summary lang="zh_CN">X-Arcade Tankstick 驱动</summary>
+        <description lang="af_ZA">Hierdie drywer stel intree vanaf die X-Arcade Tankstick in staat.[CR][CR]&apos;n udev reël word benodig. Sien https://kodi.wiki/view/Tankstick</description>
         <description lang="ca_ES">Aquest controlador permet l&apos;entrada de l&apos;X-Arcade Tankstick.[CR][CR]Es necessita una regla udev. Consulta https://kodi.wiki/view/Tankstick</description>
         <description lang="da_DK">Denne driver muliggør input fra X-Arcade Tankstick.[CR][CR]En udev-regel er nødvendig. Se https://kodi.wiki/view/Tankstick</description>
         <description lang="de_DE">Dieser Treiber ermöglicht Eingaben mit dem X-Arcade Tankstick.[CR][CR]Eine udev-Regel wird benötigt. Weitere Informationen unter https://kodi.wiki/view/Tankstick</description>

@@ -1,0 +1,26 @@
+# Kodi Media Center language file
+# Addon Name: X-Arcade Tankstick Driver
+# Addon id: peripheral.xarcade
+# Addon Provider: Team Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: KODI Addons\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2025-09-10 00:29+0000\n"
+"Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@gmail.com>\n"
+"Language-Team: Irish <https://kodi.weblate.cloud/projects/kodi-add-ons-peripherals/peripheral-xarcade/ga/>\n"
+"Language: ga\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : (n>2 && n<7) ? 2 :(n>6 && n<11) ? 3 : 4;\n"
+"X-Generator: Weblate 5.13.1\n"
+
+msgctxt "Addon Summary"
+msgid "X-Arcade Tankstick driver"
+msgstr "Tiománaí umar X-Arcade"
+
+msgctxt "Addon Description"
+msgid "This driver enables input from the X-Arcade Tankstick.[CR][CR]A udev rule is needed. See https://kodi.wiki/view/Tankstick"
+msgstr "Cumasaíonn an tiománaí seo ionchur ón X-Arcade Tankstick.[CR][CR]Tá riail udev ag teastáil. Féach https://kodi.wiki/view/Tankstick"
